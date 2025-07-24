@@ -17,18 +17,14 @@ st.dataframe(df.groupby("Category").sum())
 # Using as_index=False here preserves the Category as a column.  If we exclude that, Category would become the datafram index and we would need to use x=None to tell bar_chart to use the index
 st.bar_chart(df.groupby("Category", as_index=False).sum(), x="Category", y="Sales", color="#04f")
 
-# Aggregating by time
-# Here we ensure Order_Date is in datetime format, then set is as an index to our dataframe
+# Sort by date (optional but recommended for line charts)
+df = df.sort_values('Order_Date')
 
-df.set_index('Order_Date', inplace=True)
-# Here the Grouper is using our newly set index to group by Month ('M')
-sales_by_month = df.filter(items=['Sales']).groupby(pd.Grouper(freq='M')).sum()
+# Title
+st.subheader("Sales by Date")
 
-st.dataframe(sales_by_month)
-
-# Here the grouped months are the index and automatically used for the x axis
-st.line_chart(sales_by_month, y="Sales")
-
+# Line chart
+st.line_chart(df.set_index('Order_Date')['Sales'])
 st.write("## Your additions")
 st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
 # Get unique values for filters
