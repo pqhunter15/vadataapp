@@ -31,13 +31,25 @@ st.line_chart(sales_by_month, y="Sales")
 
 st.write("## Your additions")
 st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
+# Get unique values for filters
 category_options = df['Category'].unique()
+subcategory_options = df['Sub_category'].unique()
 
-# Create the dropdown menu
-selected_category = st.selectbox("Select a category:", category_options)
+# Create multiselect filters
+selected_categories = st.multiselect("Select Category:", category_options)
+selected_subcategories = st.multiselect("Select Sub-category:", subcategory_options)
 
-# Filter the DataFrame based on selection (optional)
-filtered_df = df[df['Category'] == selected_category]
+# Apply filters
+filtered_df = df.copy()
+
+if selected_categories:
+    filtered_df = filtered_df[filtered_df['Category'].isin(selected_categories)]
+
+if selected_subcategories:
+    filtered_df = filtered_df[filtered_df['Sub_category'].isin(selected_subcategories)]
+
+# Display results
+st.write(filtered_df)
 
 # Display the filtered DataFrame
 st.write(filtered_df)
