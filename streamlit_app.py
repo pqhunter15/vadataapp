@@ -86,40 +86,40 @@ margin_diff = profit_margin - avg_profit_margin
 diff_label = f"{margin_diff:+.2f}%"  # e.g., "+3.42%"
 
 # ---- Display metrics with light borders ----
-with st.container():
-    col1, col2, col3, col4 = st.columns(4)
+# Format values
+formatted_sales = f"${total_sales:,.2f}"
+formatted_profit = f"${total_profit:,.2f}"
+formatted_margin = f"{profit_margin:.2f}%"
+formatted_diff = f"{margin_diff:+.2f}%"
 
-    with col1:
-        st.markdown("""
-            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
-                <h6>Total Sales</h6>
-        """, unsafe_allow_html=True)
-        st.metric(label="", value=f"${total_sales:,.2f}")
-        st.markdown("</div>", unsafe_allow_html=True)
+# --- Metric display function ---
+def bordered_metric(title, value):
+    st.markdown(f"""
+        <div style='
+            border: 1px solid #ccc;
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+        '>
+            <div style='font-size: 14px; color: #333;'>{title}</div>
+            <div style='font-size: 22px; font-weight: bold; margin-top: 4px;'>{value}</div>
+        </div>
+    """, unsafe_allow_html=True)
 
-    with col2:
-        st.markdown("""
-            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
-                <h6>Total Profit</h6>
-        """, unsafe_allow_html=True)
-        st.metric(label="", value=f"${total_profit:,.2f}")
-        st.markdown("</div>", unsafe_allow_html=True)
+# --- Layout as 2x2 ---
+col1, col2 = st.columns(2)
+with col1:
+    bordered_metric("Total Sales", formatted_sales)
+with col2:
+    bordered_metric("Total Profit", formatted_profit)
 
-    with col3:
-        st.markdown("""
-            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
-                <h6>Profit Margin</h6>
-        """, unsafe_allow_html=True)
-        st.metric(label="", value=f"{profit_margin:.2f}%")
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    with col4:
-        st.markdown("""
-            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
-                <h6>Δ vs Avg Margin</h6>
-        """, unsafe_allow_html=True)
-        st.metric(label="", value=diff_label)
-        st.markdown("</div>", unsafe_allow_html=True)
+col3, col4 = st.columns(2)
+with col3:
+    bordered_metric("Profit Margin", formatted_margin)
+with col4:
+    bordered_metric("Δ vs Avg Margin", formatted_diff)
 
 st.write("### (2) add a multi-select for Sub_Category *in the selected Category (1)* (https://docs.streamlit.io/library/api-reference/widgets/st.multiselect)")
 st.write("### (3) show a line chart of sales for the selected items in (2)")
