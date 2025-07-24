@@ -33,11 +33,11 @@ st.write("## Your additions")
 st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
 # Get unique values for filters
 category_options = df['Category'].unique()
-subcategory_options = df['Sub_category'].unique()
+subcategory_options = df['Sub_Category'].unique()
 
 # Create multiselect filters
 selected_categories = st.multiselect("Select Category:", category_options)
-selected_subcategories = st.multiselect("Select Sub-category:", subcategory_options)
+selected_subcategories = st.multiselect("Select Sub-Category:", subcategory_options)
 
 # Apply filters
 filtered_df = df.copy()
