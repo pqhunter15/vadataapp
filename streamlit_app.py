@@ -64,6 +64,29 @@ sales_by_month_filtered = filtered_df.filter(items=['Sales']).groupby(pd.Grouper
 #line chart
 st.line_chart(sales_by_month_filtered, y="Sales")
 
+
+#metrics
+
+# Calculate metrics using the filtered dataframe
+total_sales = filtered_df['Sales'].sum()
+total_profit = filtered_df['Profit'].sum()
+
+# Avoid division by zero
+profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
+
+# Display metrics in columns
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(label="Total Sales", value=f"${total_sales:,.2f}")
+
+with col2:
+    st.metric(label="Total Profit", value=f"${total_profit:,.2f}")
+
+with col3:
+    st.metric(label="Profit Margin", value=f"{profit_margin:.2f}%")
+
+
 st.write("### (2) add a multi-select for Sub_Category *in the selected Category (1)* (https://docs.streamlit.io/library/api-reference/widgets/st.multiselect)")
 st.write("### (3) show a line chart of sales for the selected items in (2)")
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
