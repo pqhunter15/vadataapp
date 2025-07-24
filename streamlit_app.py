@@ -51,6 +51,17 @@ if selected_subcategories:
 # Display results
 st.write(filtered_df)
 
+df['Order_Date'] = pd.to_datetime(df['Order_Date'])
+
+# Sort by date (optional but recommended for line charts)
+df = df.sort_values('Order_Date')
+
+# Title
+st.subheader("Sales by Date")
+
+# Line chart
+st.line_chart(df.set_index('Order_Date')['Sales'])
+
 st.write("### (2) add a multi-select for Sub_Category *in the selected Category (1)* (https://docs.streamlit.io/library/api-reference/widgets/st.multiselect)")
 st.write("### (3) show a line chart of sales for the selected items in (2)")
 st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
