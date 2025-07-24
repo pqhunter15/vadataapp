@@ -41,8 +41,6 @@ avg_profit_margin = (total_profit_all / total_sales_all * 100) if total_sales_al
 # Add the same value to every row in a new column
 df['Average_Profit_Margin'] = avg_profit_margin
 
-st.write("## Your additions")
-st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
 
 
 # Get unique values for Category
@@ -65,8 +63,8 @@ filtered_df = df[df['Category'].isin(selected_categories)] if selected_categorie
 if selected_subcategories:
     filtered_df = filtered_df[filtered_df['Sub_Category'].isin(selected_subcategories)]
 
-# Display results
-st.write(filtered_df)
+
+
 
 sales_by_month_filtered = filtered_df.filter(items=['Sales']).groupby(pd.Grouper(freq='M')).sum()
 
@@ -121,7 +119,4 @@ with col3:
 with col4:
     bordered_metric("Δ vs Avg Margin", formatted_diff)
 
-st.write("### (2) add a multi-select for Sub_Category *in the selected Category (1)* (https://docs.streamlit.io/library/api-reference/widgets/st.multiselect)")
-st.write("### (3) show a line chart of sales for the selected items in (2)")
-st.write("### (4) show three metrics (https://docs.streamlit.io/library/api-reference/data/st.metric) for the selected items in (2): total sales, total profit, and overall profit margin (%)")
-st.write("### (5) use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
+
