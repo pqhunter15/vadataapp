@@ -46,7 +46,7 @@ if selected_categories:
     filtered_df = filtered_df[filtered_df['Category'].isin(selected_categories)]
 
 if selected_subcategories:
-    filtered_df = filtered_df[filtered_df['Sub_category'].isin(selected_subcategories)]
+    filtered_df = filtered_df[filtered_df['Sub_Category'].isin(selected_subcategories)]
 
 # Display results
 st.write(filtered_df)
