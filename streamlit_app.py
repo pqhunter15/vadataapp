@@ -30,7 +30,16 @@ st.dataframe(sales_by_month)
 st.line_chart(sales_by_month, y="Sales")
 
 #new code
+#adding an average profit feature to df
+# Calculate average profit margin for the entire dataframe
+total_sales_all = df['Sales'].sum()
+total_profit_all = df['Profit'].sum()
 
+# Avoid division by zero
+avg_profit_margin = (total_profit_all / total_sales_all * 100) if total_sales_all > 0 else 0
+
+# Add the same value to every row in a new column
+df['Average_Profit_Margin'] = avg_profit_margin
 
 st.write("## Your additions")
 st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
