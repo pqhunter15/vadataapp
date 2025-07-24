@@ -76,25 +76,45 @@ st.line_chart(sales_by_month_filtered, y="Sales")
 
 #metrics
 
-# Calculate metrics using the filtered dataframe
-total_sales = filtered_df['Sales'].sum()
-total_profit = filtered_df['Profit'].sum()
+# ---- Difference from average ----
+margin_diff = profit_margin - avg_profit_margin
+diff_label = f"{margin_diff:+.2f}%"  # e.g., "+3.42%"
 
-# Avoid division by zero
-profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
+# ---- Display metrics with light borders ----
+with st.container():
+    col1, col2, col3, col4 = st.columns(4)
 
-# Display metrics in columns
-col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("""
+            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
+                <h6>Total Sales</h6>
+        """, unsafe_allow_html=True)
+        st.metric(label="", value=f"${total_sales:,.2f}")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-with col1:
-    st.metric(label="Total Sales", value=f"${total_sales:,.2f}")
+    with col2:
+        st.markdown("""
+            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
+                <h6>Total Profit</h6>
+        """, unsafe_allow_html=True)
+        st.metric(label="", value=f"${total_profit:,.2f}")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-with col2:
-    st.metric(label="Total Profit", value=f"${total_profit:,.2f}")
+    with col3:
+        st.markdown("""
+            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
+                <h6>Profit Margin</h6>
+        """, unsafe_allow_html=True)
+        st.metric(label="", value=f"{profit_margin:.2f}%")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-with col3:
-    st.metric(label="Profit Margin", value=f"{profit_margin:.2f}%")
-
+    with col4:
+        st.markdown("""
+            <div style='border: 1px solid #e6e6e6; padding: 10px; border-radius: 8px;'>
+                <h6>Δ vs Avg Margin</h6>
+        """, unsafe_allow_html=True)
+        st.metric(label="", value=diff_label)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 st.write("### (2) add a multi-select for Sub_Category *in the selected Category (1)* (https://docs.streamlit.io/library/api-reference/widgets/st.multiselect)")
 st.write("### (3) show a line chart of sales for the selected items in (2)")
