@@ -75,7 +75,12 @@ st.line_chart(sales_by_month_filtered, y="Sales")
 
 
 #metrics
+total_sales = filtered_df['Sales'].sum()
+total_profit = filtered_df['Profit'].sum()
+profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
 
+# ---- Average Profit Margin (already computed before) ----
+avg_profit_margin = df['Average_Profit_Margin'].iloc[0]  # Since all rows have same value
 # ---- Difference from average ----
 margin_diff = profit_margin - avg_profit_margin
 diff_label = f"{margin_diff:+.2f}%"  # e.g., "+3.42%"
